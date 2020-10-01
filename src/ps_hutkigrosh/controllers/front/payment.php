@@ -51,28 +51,8 @@ class Ps_hutkigroshPaymentModuleFrontController extends ModuleFrontController
         $controller = new ControllerHutkigroshCompletionPage();
         $completionPanel = $controller->process($orderWrapper->getOrderId());
         $data['completionPanel'] = $completionPanel;
-//        $data['language'] = array(
-//            'id_lang' => $this->context->language->id,
-//            'iso_code' => $this->context->language->iso_code
-//        );
         $this->context->smarty->assign($data);
         $this->setTemplate('module:' . Registry::getRegistry()->getModuleDescriptor()->getModuleMachineName() . '/views/templates/front/payment_erip.tpl');
-
-
-        // $customer = new Customer($cart->id_customer);
-        // if (!Validate::isLoadedObject($customer))
-        //     Tools::redirect('index.php?controller=order&step=1');
-
-        // $currency = $this->context->currency;
-        // $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
-        // $mailVars = array(
-        //     '{bankwire_owner}' => Configuration::get('BANK_WIRE_OWNER'),
-        //     '{bankwire_details}' => nl2br(Configuration::get('BANK_WIRE_DETAILS')),
-        //     '{bankwire_address}' => nl2br(Configuration::get('BANK_WIRE_ADDRESS'))
-        // );
-
-        // $this->module->validateOrder($cart->id, Configuration::get('PS_OS_BANKWIRE'), $total, $this->module->displayName, NULL, $mailVars, (int)$currency->id, false, $customer->secure_key);
-        // Tools::redirect('index.php?controller=order-confirmation&id_cart='.$cart->id.'&id_module='.$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key);
     }
 
     public function createOrder()
@@ -94,4 +74,11 @@ class Ps_hutkigroshPaymentModuleFrontController extends ModuleFrontController
             $customer->secure_key
         );
     }
+
+    public function getPageName()
+    {
+        return "checkout"; //для подключения родного CSS, т.к. многие селекторы начинаются с body#checkout
+    }
+
+
 }

@@ -9,6 +9,8 @@
 namespace esas\cmsgate\view\client;
 
 use esas\cmsgate\hutkigrosh\view\client\CompletionPanelHutkigrosh;
+use esas\cmsgate\utils\htmlbuilder\Attributes as attribute;
+use esas\cmsgate\utils\htmlbuilder\Elements as element;
 
 class CompletionPanelHutkigroshPrestashop extends CompletionPanelHutkigrosh
 {
@@ -34,7 +36,7 @@ class CompletionPanelHutkigroshPrestashop extends CompletionPanelHutkigrosh
 
     public function getCssClass4Tab()
     {
-        return "panel panel-default";
+        return "panel panel-default checkout-step";
     }
 
     public function getCssClass4TabHeader()
@@ -71,6 +73,39 @@ class CompletionPanelHutkigroshPrestashop extends CompletionPanelHutkigrosh
     public function getModuleCSSFilePath()
     {
         return dirname(__FILE__) . "/hiddenRadio.css";
+    }
+
+    public function elementTab($key, $header, $body)
+    {
+        return
+            element::section(
+                attribute::id("tab-" . $key),
+                attribute::clazz("tab " . $this->getCssClass4Tab()),
+                element::input(
+                    attribute::id("input-" . $key),
+                    attribute::type("radio"),
+                    attribute::name("tabs2"),
+                    attribute::checked($this->isTabChecked($key))
+                ),
+                element::div(
+                    attribute::clazz("tab-header " . $this->getCssClass4TabHeader()),
+                    attribute::style("display:inline-block"),
+                    element::label(
+                        attribute::forr("input-" . $key),
+                        attribute::clazz($this->getCssClass4TabHeaderLabel()),
+                        attribute::style("text-align:left; font-weight:bold"),
+                        element::content($header)
+                    )
+                ),
+                element::div(
+                    attribute::clazz("tab-body " . $this->getCssClass4TabBody()),
+                    element::div(
+                        attribute::id($key . "-content"),
+                        attribute::clazz("tab-body-content " . $this->getCssClass4TabBodyContent()),
+                        element::content($body)
+                    )
+                )
+            )->__toString();
     }
 
 

@@ -15,7 +15,7 @@ class Ps_Hutkigrosh extends CmsgatePaymentModule
     public function __construct()
     {
         parent::__construct();
-        $this->controllers = array('payment');
+        $this->controllers = array('payment', 'alfaclick');
     }
 
     public function install()
@@ -31,11 +31,6 @@ class Ps_Hutkigrosh extends CmsgatePaymentModule
         if (!$this->active) {
             return [];
         }
-
-//        $this->smarty->assign(
-//            $this->getTemplateVarInfos()
-//        );
-
         $newOption = new PaymentOption();
         $newOption->setModuleName($this->name)
             ->setCallToActionText(Registry::getRegistry()->getConfigWrapper()->getPaymentMethodName())

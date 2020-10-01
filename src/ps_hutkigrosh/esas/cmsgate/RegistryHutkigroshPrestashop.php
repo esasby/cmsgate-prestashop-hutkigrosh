@@ -8,6 +8,7 @@
 
 namespace esas\cmsgate;
 
+use Context;
 use esas\cmsgate\descriptors\ModuleDescriptor;
 use esas\cmsgate\descriptors\VendorDescriptor;
 use esas\cmsgate\descriptors\VersionDescriptor;
@@ -17,6 +18,7 @@ use esas\cmsgate\hutkigrosh\RegistryHutkigrosh;
 use esas\cmsgate\view\admin\AdminViewFields;
 use esas\cmsgate\view\admin\ConfigFormPrestashop;
 use esas\cmsgate\view\client\CompletionPanelHutkigroshPrestashop;
+use Link;
 
 class RegistryHutkigroshPrestashop extends RegistryHutkigrosh
 {
@@ -63,12 +65,14 @@ class RegistryHutkigroshPrestashop extends RegistryHutkigrosh
 
     function getUrlAlfaclick($orderId)
     {
-        //todo
+        return (new Link())->getModuleLink(RegistryHutkigrosh::getRegistry()->getModuleDescriptor()->getModuleMachineName(), 'alfaclick');
+//        return Context::getContext()->shop->getBaseURL(true, true)
+//            . 'module/' . RegistryHutkigrosh::getRegistry()->getModuleDescriptor()->getModuleMachineName() . "/alfaclick/submit";
     }
 
     function getUrlWebpay($orderId)
     {
-        //todo
+        return Context::getContext()->shop->getBaseURL(true, false) . $_SERVER['REQUEST_URI'];
     }
 
     public function createModuleDescriptor()

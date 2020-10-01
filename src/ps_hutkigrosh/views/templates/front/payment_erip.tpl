@@ -1,8 +1,7 @@
 {extends "$layout"}
 
 {block name="content"}
-  <section>
+  <section id="content">
     {$completionPanel->render()}
-{*    <?php $_smarty_tpl->tpl_vars['completionPanel']->value->render(); ?>*}
   </section>
 {/block}
