@@ -15,6 +15,7 @@ use esas\cmsgate\descriptors\VersionDescriptor;
 use esas\cmsgate\hutkigrosh\ConfigFieldsHutkigrosh;
 use esas\cmsgate\hutkigrosh\PaysystemConnectorHutkigrosh;
 use esas\cmsgate\hutkigrosh\RegistryHutkigrosh;
+use esas\cmsgate\hutkigrosh\utils\RequestParamsHutkigrosh;
 use esas\cmsgate\view\admin\AdminViewFields;
 use esas\cmsgate\view\admin\ConfigFormPrestashop;
 use esas\cmsgate\view\client\CompletionPanelHutkigroshPrestashop;
@@ -63,16 +64,14 @@ class RegistryHutkigroshPrestashop extends RegistryHutkigrosh
         return new CompletionPanelHutkigroshPrestashop($orderWrapper);
     }
 
-    function getUrlAlfaclick($orderId)
+    function getUrlAlfaclick($orderWrapper)
     {
         return (new Link())->getModuleLink(RegistryHutkigrosh::getRegistry()->getModuleDescriptor()->getModuleMachineName(), 'alfaclick');
-//        return Context::getContext()->shop->getBaseURL(true, true)
-//            . 'module/' . RegistryHutkigrosh::getRegistry()->getModuleDescriptor()->getModuleMachineName() . "/alfaclick/submit";
     }
 
-    function getUrlWebpay($orderId)
+    function getUrlWebpay($orderWrapper)
     {
-        return Context::getContext()->shop->getBaseURL(true, false) . $_SERVER['REQUEST_URI'];
+        return (new Link())->getModuleLink(RegistryHutkigrosh::getRegistry()->getModuleDescriptor()->getModuleMachineName(), 'payment', array(RequestParamsHutkigrosh::ORDER_NUMBER => $orderWrapper->getOrderNumber())) ;
     }
 
     public function createModuleDescriptor()
