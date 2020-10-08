@@ -3,6 +3,7 @@ require_once(dirname(__FILE__) . '/init.php');
 
 use esas\cmsgate\prestashop\CmsgatePaymentModule;
 use esas\cmsgate\Registry;
+use esas\cmsgate\RegistryHutkigroshPrestashop;
 use esas\cmsgate\view\ViewBuilderPrestashop;
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
@@ -15,7 +16,7 @@ class Ps_Hutkigrosh extends CmsgatePaymentModule
     public function __construct()
     {
         parent::__construct();
-        $this->controllers = array('payment', 'alfaclick', 'callback');
+        $this->controllers = array('payment', 'paymentWebpay', 'alfaclick', 'callback');
     }
 
     public function install()
@@ -31,13 +32,18 @@ class Ps_Hutkigrosh extends CmsgatePaymentModule
         if (!$this->active) {
             return [];
         }
-        $newOption = new PaymentOption();
-        $newOption->setModuleName($this->name)
-            ->setCallToActionText(Registry::getRegistry()->getConfigWrapper()->getPaymentMethodName())
+        $eripOption = new PaymentOption();
+        $eripOption->setModuleName($this->name)
+            ->setCallToActionText(RegistryHutkigroshPrestashop::getRegistry()->getConfigWrapper()->getPaymentMethodName())
             ->setAction($this->context->link->getModuleLink($this->name, 'payment', array(), true))
-            ->setAdditionalInformation(Registry::getRegistry()->getConfigWrapper()->getPaymentMethodDetails() . ViewBuilderPrestashop::elementSandboxMessage());
+            ->setAdditionalInformation(RegistryHutkigroshPrestashop::getRegistry()->getConfigWrapper()->getPaymentMethodDetails() . ViewBuilderPrestashop::elementSandboxMessage());
+        $webpayOption = new PaymentOption();
+        $webpayOption->setModuleName($this->name)
+            ->setCallToActionText(RegistryHutkigroshPrestashop::getRegistry()->getConfigWrapper()->getPaymentMethodNameWebpay())
+            ->setAction($this->context->link->getModuleLink($this->name, 'payment_webpay', array(), true))
+            ->setAdditionalInformation(RegistryHutkigroshPrestashop::getRegistry()->getConfigWrapper()->getPaymentMethodDetailsWebpay() . ViewBuilderPrestashop::elementSandboxMessage());
         $payment_options = [
-            $newOption,
+            $eripOption, $webpayOption
         ];
 
         return $payment_options;

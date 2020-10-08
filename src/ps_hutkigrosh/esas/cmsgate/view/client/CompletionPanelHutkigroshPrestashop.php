@@ -75,38 +75,30 @@ class CompletionPanelHutkigroshPrestashop extends CompletionPanelHutkigrosh
         return dirname(__FILE__) . "/hiddenRadio.css";
     }
 
-    public function elementTab($key, $header, $body)
+    public function elementTab($key, $header, $body, $selectable = true)
     {
         return
             element::section(
                 attribute::id("tab-" . $key),
                 attribute::clazz("tab " . $this->getCssClass4Tab()),
-                element::input(
-                    attribute::id("input-" . $key),
-                    attribute::type("radio"),
-                    attribute::name("tabs2"),
-                    attribute::checked($this->isTabChecked($key))
-                ),
-                element::div(
-                    attribute::clazz("tab-header " . $this->getCssClass4TabHeader()),
-                    attribute::style("display:inline-block"),
-                    element::label(
-                        attribute::forr("input-" . $key),
-                        attribute::clazz($this->getCssClass4TabHeaderLabel()),
-                        attribute::style("text-align:left; font-weight:bold"),
-                        element::content($header)
-                    )
-                ),
-                element::div(
-                    attribute::clazz("tab-body " . $this->getCssClass4TabBody()),
-                    element::div(
-                        attribute::id($key . "-content"),
-                        attribute::clazz("tab-body-content " . $this->getCssClass4TabBodyContent()),
-                        element::content($body)
-                    )
-                )
+                $this->elementTabHeaderInput($key, $selectable),
+                $this->elementTabHeader($key, $header),
+                $this->elementTabBody($key, $body)
             )->__toString();
     }
 
+    public function elementTabHeader($key, $header)
+    {
+        return element::div(
+            attribute::clazz("tab-header " . $this->getCssClass4TabHeader()),
+            attribute::style("display:inline-block"),
+            element::label(
+                attribute::forr("input-" . $key),
+                attribute::clazz($this->getCssClass4TabHeaderLabel()),
+                attribute::style("text-align:left; font-weight:bold"),
+                element::content($header)
+            )
+        );
+    }
 
 }
