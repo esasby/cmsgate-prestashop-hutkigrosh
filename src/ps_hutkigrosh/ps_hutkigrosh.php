@@ -2,7 +2,6 @@
 require_once(dirname(__FILE__) . '/init.php');
 
 use esas\cmsgate\prestashop\CmsgatePaymentModule;
-use esas\cmsgate\Registry;
 use esas\cmsgate\RegistryHutkigroshPrestashop;
 use esas\cmsgate\view\ViewBuilderPrestashop;
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;

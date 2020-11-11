@@ -78,7 +78,7 @@ class RegistryHutkigroshPrestashop extends RegistryHutkigrosh
     {
         return new ModuleDescriptor(
             "ps_hutkigrosh",
-            new VersionDescriptor("1.12.0", "2020-09-23"),
+            new VersionDescriptor("1.13.0", "2020-11-11"),
             "Прием платежей через ЕРИП (сервис EPOS)",
             "https://bitbucket.esas.by/projects/CG/repos/cmsgate-prestashop-hutkigrosh/browse",
             VendorDescriptor::esas(),
